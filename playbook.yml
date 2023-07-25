@@ -1,5 +1,5 @@
 ---
-- hosts: "my_server"
+- hosts: "prometheus_server"
   gather_facts: false
   vars: 
     prometheus_version: "2.45.0"
@@ -19,9 +19,18 @@
         remote_src: true
         dest: "~"
       when: not prometheus_dir.stat.exists
-
     - copy:
         src: prometheus.yml
         dest: "~/prometheus-{{ prometheus_version }}.linux-amd64/prometheus.yml"
-
-    - shell: "(cd ~/prometheus-{{ prometheus_version }}.linux-amd64 && ./prometheus &)"
+    - template:
+        src: prometheus.service
+        dest: "/etc/systemd/system/prometheus.service"
+        mode: "755"
+      become: true
+    - systemd:
+        name: prometheus
+        state: started
+      become: true
+    - systemd:
+        daemon_reexec: true
+      become: true
