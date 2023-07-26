@@ -1,0 +1,8 @@
+- yum:
+    name: "https://dl.grafana.com/enterprise/release/grafana-enterprise-{{ grafana_version }}.x86_64.rpm"
+    state: present
+  become: true
+- systemd:
+    name: grafana-server
+    state: started
+  become: true

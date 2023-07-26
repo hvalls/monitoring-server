@@ -46,6 +46,15 @@ resource "aws_security_group" "monitoring" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+    description = "Allow traffic to Grafana (port 3000 by default)"
+    from_port        = 3000
+    to_port          = 3000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   egress {
     description = "Allow all outbound traffic"
     from_port        = 0
