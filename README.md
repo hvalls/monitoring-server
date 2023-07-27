@@ -22,6 +22,7 @@ Once AWS EC2 machine is ready, Ansible provisioning is triggered to install Prom
 
 ### Run
 ```
+$ cd infra/
 $ terraform plan --out plan.tfplan
 $ terraform apply plan.tfplan
 ```
