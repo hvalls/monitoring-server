@@ -12,10 +12,6 @@ resource "aws_instance" "monitoring" {
   associate_public_ip_address = true
 
   provisioner "local-exec" {
-    connection {
-      host = self.public_ip
-      user = "ec2-user"
-    }
     command = "ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -u ec2-user -i '${self.public_ip},' --private-key ${var.instance_ssh_priv_key} ../ansible/playbook.yml"
   }
 }
